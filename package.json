@@ -1,0 +1,24 @@
+{
+  "name": "blockchain-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MGastelluM/blockchain-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MGastelluM/blockchain-project/issues"
+  },
+  "homepage": "https://github.com/MGastelluM/blockchain-project#readme",
+  "dependencies": {
+    "level": "^8.0.0",
+    "ts-node": "^10.9.1",
+    "uuid": "^9.0.0"
+  }
+}
