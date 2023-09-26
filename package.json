@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "ts-node index.ts",
+    "build:watch": "tsc -w",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,8 +19,9 @@
   },
   "homepage": "https://github.com/MGastelluM/blockchain-project#readme",
   "dependencies": {
+    "@types/node": "^20.7.0",
     "level": "^8.0.0",
     "ts-node": "^10.9.1",
-    "uuid": "^9.0.0"
+    "typescript": "^5.2.2"
   }
 }
