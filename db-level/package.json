@@ -1,7 +1,6 @@
 {
   "name": "db-level",
   "version": "1.0.0",
-  "description": "",
   "main": "db.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,7 +8,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "esm-hook": "^0.1.4",
     "express": "^4.18.2",
-    "level": "^8.0.0"
-  }
+    "level": "^8.0.0",
+    "node-fetch": "^3.3.2"
+  },
+  "directories": {
+    "example": "example"
+  },
+  "description": ""
 }
