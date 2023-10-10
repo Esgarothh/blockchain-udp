@@ -1,16 +1,15 @@
 import * as crypto from "crypto";
 import { Block } from "./block";
 import { Transaction } from "./transaction";
+import { getBlockchain } from "./database_logic";
 
-require('dotenv').config()
-const par:any = process.env.DIFFICULTY
-const DIFFICULTY:number =parseInt(par)
+const DIFFICULTY:number = 4
 
 export class Chain {
   public static instance = new Chain();
-  chain: Block[];
+  chain: Block[] = [];
   constructor() {
-    this.chain = [new Block(42,"", new Transaction(100, "genesis", "Satoshi"))];
+    this.initializeChain();
   }
 
   get lastBlock() {
@@ -32,7 +31,7 @@ export class Chain {
     return null;
   }
   
-addBlock(
+async addBlock(
   transaction: Transaction,
   senderPublicKey: string,
   signature: Buffer
@@ -58,6 +57,22 @@ addBlock(
       console.log("From<Chain>: 🧾 newBlockPushedToChain succesfully!");
     }
   }
+}
+
+async initializeChain() {
+  console.log("From<Chain>: 🧾 Initializing chain...");
+  //check chain on database
+  //if chain is empty, initialize with genesis block
+  //else, initialize with the chain in the database
+  const blockchain = await getBlockchain();
+  if (blockchain === null) {
+    console.log("From<Chain>: 🧾 Initializing with genesis block...");
+    this.chain = [new Block(0,"", new Transaction(100, "genesis", "Satoshi"))];
+    return;
+  }
+  console.log("From<Chain>: 🧾 Initializing with chain from database...");
+  this.chain = blockchain;
+  console.log("actual chain is", this.chain);
 }
 
 }
