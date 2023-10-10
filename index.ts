@@ -1,25 +1,58 @@
 import { Chain } from "./functions/src/blockchain-core/chain";
+import { getGenesisBlock, getLastBlock, sendBlockToServer, sendChainToServer, sendTransactionToServer } from "./functions/src/blockchain-core/database_logic";
 import { Wallet } from "./functions/src/blockchain-core/wallet";
 
-import { sendBlockToServer, sendTransactionToServer } from "./functions/src/blockchain-core/database_logic";
+async function sleep(ms:number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-const seba = new Wallet();
-const chalo = new Wallet();
-const victor = new Wallet();
+export const initializeGenesisBlock = async () => {
+console.log("Initializing genesis block...");
+await sleep(5000);
+const primaryBlock = Chain.instance.lastBlock;
+await sendBlockToServer(primaryBlock);
+await sendTransactionToServer(Chain.instance.lastBlock.transaction);
+await sendChainToServer(Chain.instance.chain);
+}
 
-seba.sendMoney(50, chalo.publicKey);
-chalo.sendMoney(23, victor.publicKey);
-victor.sendMoney(5, chalo.publicKey);
+export const setSecondaryBlockInitialize = async () => {
+    console.log("Initializing secondary block...");
+    await sleep(5000);
+    const seba = new Wallet();
+    const chalo = new Wallet();
+    await seba.sendMoney(50, chalo.publicKey);
+    await sendTransactionToServer(Chain.instance.lastBlock.transaction);
+    await sendBlockToServer(Chain.instance.lastBlock);
+    await sendChainToServer(Chain.instance.chain);
+}
 
-const primaryBlock = Chain.instance.lastBlock; // Assuming this is your primary block
+export async function getGenesisBlockFromDatabase() {
+    const genesisBlock = await getGenesisBlock();
+    console.log("Get genesis block from database:", genesisBlock);
+}
 
-// Send the primary block to the server
-sendBlockToServer(primaryBlock);
+export async function getLastBlockFromDatabase() {
+    const lastBlock = await getLastBlock();
+    console.log("Get last block from database blockchain:", lastBlock);
+}
 
-sendTransactionToServer(Chain.instance.lastBlock.transaction);
+export const getFunctionsFromDataBase = async () => {
+    await getGenesisBlockFromDatabase();
+    await getLastBlockFromDatabase();
+}
+
+const initializeProject = async () => {
+    await initializeGenesisBlock();
+    await sleep(5000);
+    await setSecondaryBlockInitialize();
+}
 
 
 
-console.log(Chain.instance);
-console.log(Chain.instance.lastBlock.transaction);
+const main = async () => {
+    // TODO 1: Initialize the project by calling the initializeProject function
+    await initializeProject();
+    // TODO 2: Call the showMenu function (pending implementation)
+}
 
+main();
