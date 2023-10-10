@@ -77,7 +77,7 @@ export async function sendTransactionToServer(transaction:Transaction) {
 
 export const getGenesisBlock =  async () => {
   try {
-    const response = await fetch(`http://localhost:3000/genesisBlock`, {
+    const response = await fetch(`http://localhost:3000/getGenesisBlock`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     });
@@ -92,6 +92,7 @@ export const getGenesisBlock =  async () => {
     console.error('Error on genesis block request', error.message);
   }
 }
+
 export const getBlockchain =  async () => {
   try {
     const response = await fetch(`http://localhost:3000/getBlockchain`, {
@@ -101,6 +102,24 @@ export const getBlockchain =  async () => {
 
     if (response.status === 200) {
       console.log('Blockchain received:');
+      return response.json();
+    } else {
+      console.error('Error on genesis block request:', response.statusText);
+      return null;
+    }
+  } catch (error:any) {
+    console.error('Error on genesis block request', error.message);
+  }
+}
+
+export const getLastBlock =  async () => {
+  try {
+    const response = await fetch(`http://localhost:3000/getLastBlock`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (response.status === 200) {
       return response.json();
     } else {
       console.error('Error on genesis block request:', response.statusText);

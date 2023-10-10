@@ -24,7 +24,7 @@ app.post('/storeData', async (req, res) => {
 });
 
 // Route to fetch the genesis block
-app.get('/genesisBlock', async (req, res) => {
+app.get('/getGenesisBlock', async (req, res) => {
     try {
         const blocks = await db.get('chain');
         const genesisBlockKey = Object.keys(blocks)[0];
@@ -46,6 +46,24 @@ app.get('/getBlockChain', async (req, res) => {
         const blocks = await db.get('chain');
         console.log('BlockChain fetched successfully', blocks);
         res.status(200).json(blocks);
+    } catch (error) {
+        if (error.notFound) {
+            res.status(404).json({ error: 'Genesis block not found' });
+        } else {
+            console.error('Error fetching genesis block:', error);
+            res.status(500).json({ error: 'Error fetching genesis block' });
+        }
+    }
+});
+
+app.get('/getLastBlock', async (req, res) => {
+    try {
+        const blocks = await db.get('chain');
+        const keys = Object.keys(blocks);
+        const lastBlockKey = keys[keys.length - 1];
+        const lastBlockValue = blocks[lastBlockKey];
+        console.log('Last block fetched successfully', lastBlockValue);
+        res.status(200).json(lastBlockValue);
     } catch (error) {
         if (error.notFound) {
             res.status(404).json({ error: 'Genesis block not found' });
