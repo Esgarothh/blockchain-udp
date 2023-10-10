@@ -9,7 +9,6 @@ export class Chain {
   public static instance = new Chain();
   chain: Block[] = [];
   constructor() {
-    this.initializeChain();
   }
 
   get lastBlock() {
@@ -68,7 +67,8 @@ async initializeChain() {
   if (blockchain === null) {
     console.log("From<Chain>: 🧾 Initializing with genesis block...");
     this.chain = [new Block(0,"", new Transaction(100, "genesis", "Satoshi"))];
-    return;
+
+    return 1;
   }
   console.log("From<Chain>: 🧾 Initializing with chain from database...");
   this.chain = blockchain;
