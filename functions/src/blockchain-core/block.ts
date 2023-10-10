@@ -1,8 +1,6 @@
 import * as crypto from "crypto";
 import { Transaction } from "./transaction";
 
-require('dotenv').config()
-const transactionNumber:any=process.env.TRANSACTION_NUMBERS
 
 export class Block {
   public nonce: number; 
@@ -12,7 +10,6 @@ export class Block {
     public index: number,
     public prevHash: string,
     public transaction: Transaction,
-    //public transaction: Transaction[]<Transaction,transactionNumber>,
     public ts = Date.now()
   ) 
   {

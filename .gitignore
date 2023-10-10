@@ -8,8 +8,3 @@ typings/
 # Node.js dependency directory
 node_modules/
 lib/
-db-level/example/000003.log
-db-level/example/CURRENT
-db-level/example/LOCK
-db-level/example/LOG
-db-level/example/MANIFEST-000002
