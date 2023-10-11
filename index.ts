@@ -1,6 +1,6 @@
 import { Block } from "./functions/src/blockchain-core/block";
 import { Chain } from "./functions/src/blockchain-core/chain";
-import { getGenesisBlock, getLastBlock, sendBlockToServer, sendChainToServer, sendTransactionToServer } from "./functions/src/blockchain-core/database_logic";
+import { getGenesisBlock, getLastBlock, sendBlockToServer, sendChainToServer, sendTransactionToServer ,getBlockById} from "./functions/src/blockchain-core/database_logic";
 import { Wallet } from "./functions/src/blockchain-core/wallet";
 
 
@@ -29,9 +29,9 @@ export const initializeGenesisBlock = async () => {
 
 export const setSecondaryBlockInitialize = async () => {
     console.log("Initializing secondary block...");
-    const seba = new Wallet();
-    const chalo = new Wallet();
-    await seba.sendMoney(50, chalo.publicKey);
+    const sender = new Wallet();
+    const recipient = new Wallet();
+    await sender.sendMoney(50, recipient .publicKey);
     await sendTransactionToServer(Chain.instance.lastBlock.transaction);
     await sendBlockToServer(Chain.instance.lastBlock);
     await sendChainToServer(Chain.instance.chain);
@@ -67,16 +67,17 @@ export async function getLastBlockFromDatabase() {
     console.log("Get last block from database blockchain:", lastBlock);
 }
 
+export async function getBlockByIdFromDatabase(id : string) {
+  const idblock = await getBlockById(id);
+  console.log(`Block with id ${id} from database blockchain:`, idblock);
+}
+
+
+
 export const getFunctionsFromDataBase = async () => {
     await getGenesisBlockFromDatabase();
     await getLastBlockFromDatabase();
 }
-
-const initializeProject = async () => {
-    await initializeGenesisBlock();
-    await setSecondaryBlockInitialize();
-}
-
 
 function formatAndSummarizePublicKey(publicKey: string) {
     const keyLines = publicKey.split('\n');
@@ -111,7 +112,9 @@ const main = async () => {
         console.log("2. See last block from the database");
         console.log("3. Get genesis block from database");
         console.log("4. Send a generic transaction");
-        console.log("5. Exit");
+        console.log("5. Get block by ID");
+        console.log("6. <test> ");
+        console.log("7. Exit");
   
         const choice = await getUserInput("Choose an option (1-5): ");
   
@@ -119,8 +122,9 @@ const main = async () => {
           case '1':
             // Action to see the last block from the chain
             const lastBlockFromChain = Chain.instance.lastBlock;
-            console.log("Last block from chain:");
-            displayBlockParts(lastBlockFromChain)
+            console.log("Last block from chain:",lastBlockFromChain);
+            //console.log("Last block from chain:");
+            //displayBlockParts(lastBlockFromChain)
             break;
           case '2':
             await getLastBlockFromDatabase()
@@ -132,7 +136,14 @@ const main = async () => {
             await sendGenericTransaction(); // Use 'await' here
             console.log("Generic transaction completed.");
             break;
-          case '5':
+            case '5':
+              const userInput = await getUserInput("Enter the block ID: ");
+              const blockId = String(userInput); // Ensure blockId is a string
+              await getBlockByIdFromDatabase(blockId);
+          case '6':
+            console.log("test.");
+            break;
+          case '7':
             console.log("Exiting the menu.");
             process.exit(0);
           default:
