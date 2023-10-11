@@ -1,7 +1,5 @@
 # <CheloCoin> BlockChain UDP proyect
-[![Go Reference](https://en.wikipedia.org/wiki/File:Node.js_logo.svg)](https://nodejs.org/en/blog/release/v16.5.0)
-[![Go Report Card](https://goreportcard.com/badge/github.com/dgraph-io/badger/v4)](https://goreportcard.com/report/github.com/dgraph-io/badger/v4)
-
+[![Node Version 16.5.0](https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg)](https://nodejs.org/en/blog/release/v16.5.0)
 
 <CheloCoin> is based on a group proyect to create a real functional distributed blockchain with amazing improvements. 
 Basically it is a small-sized cryptocurrency that uses DB-Level as a DBB, typescript for the main code and front console.
