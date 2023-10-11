@@ -66,7 +66,7 @@ async initializeChain() {
   const blockchain = await getBlockchain();
   if (blockchain === null) {
     console.log("From<Chain>: 🧾 Initializing with genesis block...");
-    this.chain = [new Block(0,"", new Transaction(100, "genesis", "Satoshi"))];
+    this.chain = [new Block(1,"", new Transaction(100, "genesis", "Satoshi"))];
 
     return 1;
   }

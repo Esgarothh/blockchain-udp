@@ -129,3 +129,23 @@ export const getLastBlock =  async () => {
     console.error('Error on genesis block request', error.message);
   }
 }
+
+
+export const getBlockById =  async (id:String) => {
+  try {
+    const response = await fetch(`http://localhost:3000/getBlockById/${id}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (response.status === 200) {
+      return response.json();
+    } else {
+      console.error('Error on index block request:', response.statusText);
+      return null;
+    }
+  } catch (error:any) {
+    console.error('Error on index block request', error.message);
+  }
+}
+
